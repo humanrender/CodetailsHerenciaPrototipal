@@ -1,0 +1,411 @@
+---
+title: Welcome to Middleman
+---
+
+<section data-transition="none">
+  <h2>Herencia prototipal</h2>
+</section>
+<section data-transition="none">
+  <%= image_tag "characters/class_simple.png", :class=>"simple_image" %>
+  <%= image_tag "characters/prototype_simple.png", :class=>"simple_image" %>
+</section>
+<section data-transition="none">
+  <%= image_tag "characters/class_simple.png", :class=>"simple_image" %>
+  <strong>Jimmy Class</strong>
+</section>
+<% [:pirate, :pirate_ninja, :pirate_ninja_fire].each do |type| %>
+<section data-transition="none">
+  <%= image_tag "characters/class_#{type}.png", :class=>"simple_image" %>
+</section>
+<% end %>
+<section class="side_by_side">
+  <div class="side_image">
+    <%= image_tag "characters/class_pirate_ninja_fire.png", :class=>"simple_image" %>  
+  </div>  
+  <div class="fragment">
+    <pre>
+      <code data-trim class="ruby">
+class Firefighter
+  def save_kitten
+    # rush inside the burning house to save kitteh
+  end
+end
+class Ninja < FireFighter
+  def kill_swiftly
+    # secret ninja stuff
+  end
+end
+class Pirate < Ninja
+  def plunder
+    # arrgh
+  end
+end
+class JimmyClass < Pirate
+end
+      </code>
+    </pre>
+  </div>
+</section>
+<section>
+  <%= image_tag "characters/prototype_simple.png", :class=>"simple_image" %>
+  <strong>Jimmy Prototype</strong>
+</section>
+<section class="side_by_side">
+  <div class="side_image">
+    <%= image_tag "characters/prototype_simple.png", :class=>"simple_image" %>  
+  </div>  
+  <div>
+    <pre>
+      <code data-trim class="js">
+// Constructor
+function JimmyPrototype(){
+  // dogflute constructor
+}
+      </code>
+    </pre>
+    <pre class="fragment">
+      <code data-trim class="js">
+// Instance method
+JimmyPrototype.prototype.play_flute = function(){
+  // a dog approaches
+}
+      </code>
+    </pre>
+  </div>
+</section>
+<section>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){}
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){}
+Ninja.prototype.kill_swiftly = function(){
+  // secret ninja stuff
+}
+
+function Pirate(){}
+Pirate.prototype.plunder = function(){
+  // arrgh 
+}
+
+function JimmyPrototype(){
+  // dogflute constructor
+}
+    </code>
+</pre>
+</section>
+<section>
+  <pre>
+    <code data-trim class="js">
+function Pirate(){}
+Pirate.prototype.plunder = function(){
+  // arrgh 
+}
+
+function JimmyPrototype(){
+  // dogflute constructor
+}
+    </code>
+</pre>
+<div class="fragment">
+  <pre class="fragment grow">
+    <code data-trim class="js">
+  JimmyPrototype.prototype = new Pirate();
+    </code>
+  </pre>
+</div>
+</section>
+<section>
+  <div>
+    <div class="fragment side_char">
+      <%= image_tag "characters/prototype_simple.png", :class=>"simple_image" %>
+    </div>  
+    <div class="fragment side_char">
+      <%= image_tag "characters/prototype_pirate_ninja_fire.png", :class=>"simple_image" %>    
+    </div>
+  </div>  
+</section>
+<section>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){};
+Ninja.prototype = new Firefighter();
+Ninja.prototype.kill_swiftly = function(){
+  // secret ninja stuff
+}
+
+function Pirate(){};
+Pirate.prototype = new Ninja();
+Pirate.prototype.plunder = function(){
+  // arrgh 
+}
+
+function JimmyPrototype(){
+  // dogflute constructor
+}
+JimmyPrototype.prototype = new Pirate();
+</code>
+</pre>
+</section>
+<section>
+  <div>
+    <div class="side_char side_char_small">
+      <%= image_tag "characters/prototype_simple.png", :class=>"simple_image" %>
+    </div>  
+    <div class="side_char side_char_small">
+      <%= image_tag "characters/chinese_pirate.png", :class=>"simple_image" %>    
+    </div>
+    <div class="side_char side_char_small">
+      <%= image_tag "characters/chinese_ninja.png", :class=>"simple_image" %>    
+    </div>
+    <div class="side_char side_char_small">
+      <%= image_tag "characters/chinese_firefighter.png", :class=>"simple_image" %>    
+    </div>
+  </div>  
+</section>
+<section>
+  <h2>Errores comunes</h2>
+</section>
+<section>
+  <h3 class="fragment">Metodos de instancia</h3>
+  <pre class="fragment">
+    <code data-trim class="js">
+function Firefighter(){};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){};
+Ninja.prototype.kill_swiftly = function(){
+  // secret ninja stuff
+}
+Ninja.prototype = new Firefighter();
+
+new Ninja().kill_swiftly(); // error!!!
+</code>
+</pre>
+</section>
+<section>
+  <h3>Metodos de instancia</h3>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){};
+Ninja.prototype = new Firefighter();
+Ninja.prototype.kill_swiftly = function(){
+  // secret ninja stuff
+}
+
+new Ninja().kill_swiftly(); // secret ninja stuff
+</code>
+</pre>
+</section>
+<section>
+  <h3 class="fragment">Constructores pesados</h3>
+  <pre class="fragment">
+    <code data-trim class="js">
+function Firefighter(){
+  // Over 9000 AJAX calls!
+  // Parsing and reading of results
+};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){};
+Ninja.prototype = new Firefighter();
+</code>
+</pre>
+</section>
+<section>
+  <h3>Constructores pesados</h3>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){
+  // Over 9000 AJAX calls!
+  // Parsing and reading of results
+};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){};
+// Ninja.prototype = new Firefighter();
+
+var tmp = function(){}
+tmp.prototype = Firefighter.prototype;
+Ninja.prototype = new tmp();
+
+</code>
+</pre>
+</section>
+<section>
+  <h3>Constructores pesados</h3>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){
+  // Over 9000 AJAX calls!
+  // Parsing and reading of results
+};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){};
+// Ninja.prototype = new Firefighter();
+
+Ninja.prototype = $.extend({},Firefighter.prototype);
+
+</code>
+</pre>
+</section>
+<section>
+  <h2>super</h2>
+</section>
+<section>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){
+  // Over 9000 AJAX calls!
+  // Parsing and reading of results
+};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){};
+Ninja.prototype = $.extend({},Firefighter.prototype);
+
+</code>
+</pre>
+</section>
+<section>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){
+  // Over 9000 AJAX calls!
+  // Parsing and reading of results
+};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){
+  Firefighter.call(this)
+};
+Ninja.prototype = $.extend({},Firefighter.prototype);
+
+</code>
+</pre>
+</section>
+<section>
+  <h3>
+    Firefighter() <br/>!=<br/> Firefighter.call(this)
+  </h3>
+</section>
+<section>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){
+  // Over 9000 AJAX calls!
+  // Parsing and reading of results
+};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){
+  Firefighter.call(this)
+};
+Ninja.prototype = $.extend({},Firefighter.prototype);
+
+</code>
+</pre>
+</section>
+<section>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){
+  // Over 9000 AJAX calls!
+  // Parsing and reading of results
+};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){
+  Ninja.prototype._super.call(this)
+};
+Ninja.prototype = $.extend({},Firefighter.prototype);
+Ninja.prototype._super = Firefighter;
+
+</code>
+</pre>
+</section>
+<section>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){
+  // Over 9000 AJAX calls!
+  // Parsing and reading of results
+};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){
+  Ninja.prototype._super.call(this)
+};
+Ninja.prototype = $.extend({},Firefighter.prototype);
+Ninja.prototype._super = Firefighter;
+
+Ninja.prototype.save_kitten = function(){
+  // save kitteh with ninja skills
+}
+
+</code>
+</pre>
+</section>
+<section>
+  <pre>
+    <code data-trim class="js">
+function Firefighter(){
+  // Over 9000 AJAX calls!
+  // Parsing and reading of results
+};
+Firefighter.prototype.save_kitten = function(){
+  // rush inside the burning house to save kitteh
+}
+
+function Ninja(){
+  Ninja.prototype._super.call(this)
+};
+Ninja.prototype = $.extend({},Firefighter.prototype);
+Ninja.prototype._super = Firefighter;
+
+Ninja.prototype.save_kitten = function(){
+
+  Ninja.prototype._super.prototype.save_kitten.call(this)
+
+  // save kitteh with ninja skills
+}
+
+</code>
+</pre>
+</section>
+<section>
+  <%= image_tag "characters/prototype_metal.png", :class=>"simple_image" %>
+  <h1>Gracias</h1>
+</section>
